@@ -1,28 +1,49 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
+import { AuthContext } from "../../context/AuthContext";
 
 const ProfilePage = () => {
+  const { authUser, updateProfile } = useContext(AuthContext);
+
   const [selectedImg, setSelectedImg] = useState(null);
   const navigate = useNavigate();
-  const [name, setName] = useState("Martin Johnson");
-  const [bio, setBio] = useState("Hi Everyone, I am using QuickChat");
+  const [name, setName] = useState(authUser.fullName);
+  const [bio, setBio] = useState(authUser.bio);
 
-  // FIXED: handleSumit → handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let base64Pic;
+    if (selectedImg) {
+      base64Pic = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedImg);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+
+    await updateProfile({
+      fullName: name,
+      bio,
+      profilePic: base64Pic ?? undefined,
+    });
     navigate("/");
   };
 
   return (
     <div className="min-h-screen bg-cover bg-no-repeat flex items-center justify-center">
       <div className="w-5/6 max-w-2xl backdrop-blur-2xl text-gray-300 border-2 border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg">
-        
-        {/* FIXED: handleSubmit */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-5 flex-1">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-5 p-5 flex-1"
+        >
           <h3 className="text-lg">Profile details</h3>
 
-          <label htmlFor="avatar" className="flex items-center gap-3 cursor-pointer">
+          <label
+            htmlFor="avatar"
+            className="flex items-center gap-3 cursor-pointer"
+          >
             <input
               onChange={(e) => setSelectedImg(e.target.files[0])}
               type="file"
@@ -34,7 +55,7 @@ const ProfilePage = () => {
               src={
                 selectedImg
                   ? URL.createObjectURL(selectedImg)
-                  : assets.avatar_icon
+                  : authUser?.profilePic || assets.avatar_icon
               }
               alt=""
               className={`w-12 h-12 ${selectedImg && "rounded-full"}`}
@@ -68,10 +89,13 @@ const ProfilePage = () => {
           </button>
         </form>
 
-        {/* FIXED: max-w-44 → w-44 */}
         <img
           className="w-44 aspect-square rounded-full mx-10 max-sm:mt-10"
-          src={assets.logo_icon}
+          src={
+            selectedImg
+              ? URL.createObjectURL(selectedImg)
+              : authUser?.profilePic || assets.logo_icon
+          }
           alt=""
         />
       </div>
