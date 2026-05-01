@@ -1,6 +1,6 @@
 // ChatContainer.jsx
 import { useContext, useEffect, useRef, useState } from "react";
-import assets, { messagesDummyData } from "../assets/assets";
+import assets from "../assets/assets";
 import { formatMessageTime } from "../lib/utils";
 import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -44,29 +44,29 @@ const ChatContainer = () => {
   }, [messages]);
 
   return selectedUser ? (
-    <div className="h-full overflow-y-scroll relative backdrop-blur-lg">
-      <div className="flex items-center gap-3 py-3 mx-4 border-b border-stone-500">
+    <div className="h-full min-h-0 min-w-0 overflow-hidden relative backdrop-blur-lg flex flex-col">
+      <div className="flex shrink-0 items-center gap-3 py-3 mx-4 border-b border-stone-500">
         <img
           src={selectedUser.profilePic || assets.avatar_icon}
           alt=""
-          className="w-8 rounded-full"
+          className="w-8 shrink-0 rounded-full"
         />
-        <p className="flex-1 text-lg text-white flex items-center gap-2">
-          {selectedUser.fullName}
+        <div className="flex-1 min-w-0 flex items-center gap-2 text-base sm:text-lg text-white">
+          <span className="truncate">{selectedUser.fullName}</span>
           {onlineUsers.includes(selectedUser._id) && (
-            <span className="w-2 h-2 rounded-full bg-green-500"></span>
+            <span className="w-2 h-2 shrink-0 rounded-full bg-green-500" aria-hidden />
           )}
-        </p>
+        </div>
         <img
           onClick={() => setSelectedUser(null)}
           src={assets.arrow_icon}
           alt=""
-          className="md:hidden max-w-7"
+          className="md:hidden max-w-7 shrink-0 cursor-pointer"
         />
-        <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5" />
+        <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5 shrink-0" />
       </div>
 
-      <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
+      <div className="flex flex-1 min-h-0 flex-col overflow-y-auto p-3 pb-28">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -78,11 +78,11 @@ const ChatContainer = () => {
               <img
                 src={msg.image}
                 alt=""
-                className="max-w-[230px] border border-gray-700 rounded-lg overflow-hidden mb-8"
+                className="max-w-[min(230px,72%)] border border-gray-700 rounded-lg overflow-hidden mb-8"
               />
             ) : (
               <p
-                className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white ${
+                className={`p-2 max-w-[min(200px,72%)] md:max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-words bg-violet-500/30 text-white ${
                   msg.senderId === authUser._id
                     ? "rounded-br-none"
                     : "rounded-bl-none"
@@ -110,15 +110,15 @@ const ChatContainer = () => {
         <div ref={scrollEnd}></div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
-        <div className="flex-1 flex items-center bg-gray-100/12 px-3 rounded-full">
+      <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center gap-2 p-3 min-w-0 bg-black/10 backdrop-blur-sm">
+        <div className="flex-1 min-w-0 flex items-center bg-gray-100/12 px-2 sm:px-3 rounded-full">
           <input
             onChange={(e) => setInput(e.target.value)}
             value={input}
             onKeyDown={(e) => e.key === "Enter" && handleSendMessage(e)}
             type="text"
             placeholder="send a message"
-            className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-white placeholder-gray-400"
+            className="flex-1 min-w-0 text-sm p-2 sm:p-3 border-none rounded-lg outline-none text-white placeholder-gray-400"
           />
           <input
             onChange={handleSendImage}
@@ -139,7 +139,7 @@ const ChatContainer = () => {
           onClick={handleSendMessage}
           src={assets.send_button}
           alt=""
-          className="w-7 cursor-pointer"
+          className="w-7 shrink-0 cursor-pointer"
         />
       </div>
     </div>

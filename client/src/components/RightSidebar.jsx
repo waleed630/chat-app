@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import assets, { imagesDummyData } from "../assets/assets";
+import assets from "../assets/assets";
 import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -15,7 +15,7 @@ const RightSidebar = () => {
 
   return (
     selectedUser && (
-      <div className="bg-[#818582]/10 text-white w-full relative overflow-y-auto max-md:hidden">
+      <div className="bg-[#818582]/10 text-white w-full min-h-0 min-w-0 relative overflow-y-auto max-md:hidden">
         {/* header */}
         <div className="pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto">
           <img
@@ -23,13 +23,13 @@ const RightSidebar = () => {
             alt={`${selectedUser.fullName} avatar`}
             className="w-20 aspect-[1/1] rounded-full object-cover"
           />
-          <h1 className="px-10 text-xl font-medium mx-auto flex items-center gap-2">
+          <h1 className="px-4 sm:px-10 text-lg sm:text-xl font-medium mx-auto flex flex-wrap items-center justify-center gap-2 text-center break-words">
             {onlineUsers.includes(selectedUser._id) && (
               <p className="w-2 h-2 rounded-full bg-green-500" aria-hidden></p>
             )}
             {selectedUser.fullName}
           </h1>
-          <p className="px-10 mx-auto text-center">{selectedUser.bio}</p>
+          <p className="px-4 sm:px-10 mx-auto text-center break-words">{selectedUser.bio}</p>
         </div>
 
         <hr className="border-[#ffffff50] my-4" />

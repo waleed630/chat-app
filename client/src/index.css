@@ -2,8 +2,12 @@
 
 @import "tailwindcss";
 
-*{
+* {
    font-family: "Outfit", sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 ::-webkit-scrollbar{

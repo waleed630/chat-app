@@ -27,18 +27,22 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <div
-        className="min-h-screen bg-cover bg-center flex
+        className="min-h-[100dvh] w-full px-4 py-8 box-border bg-cover bg-center flex
         items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl"
       >
         {/* ------- left ------- */}
-        <img src={assets.logo_big} alt="" className="w-[min(30vw,250px)]" />
+        <img
+          src={assets.logo_big}
+          alt=""
+          className="w-[min(72vw,250px)] max-w-full shrink-0"
+        />
 
         {/* ------- right ------- */}
         <form
           onSubmit={onSubmitHandler}
-          className="border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg items-center"
+          className="w-full max-w-md border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg items-stretch box-border"
         >
           <h2 className="font-medium text-2xl flex justify-between items-center w-full">
             {currState}{" "}
@@ -102,9 +106,9 @@ const LoginPage = () => {
             {currState === "Sign up" ? "Create Account" : "Login Now"}
           </button>
 
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <input type="checkbox" />
-            <p>Agree to the terms of use and privacy policy</p>
+          <div className="flex items-start gap-2 text-sm text-gray-500 min-w-0">
+            <input type="checkbox" className="mt-0.5 shrink-0" />
+            <p className="break-words">Agree to the terms of use and privacy policy</p>
           </div>
 
           <div className="flex flex-col gap-2">
