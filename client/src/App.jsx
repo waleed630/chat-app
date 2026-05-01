@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 const App = () => {
   const { authUser } = useContext(AuthContext);
   return (
-    <div className="min-h-[100dvh] w-full overflow-x-hidden bg-[url('/bgImage.svg')] bg-contain bg-top bg-no-repeat">
+    <div className="min-h-[100dvh] w-full overflow-x-hidden bg-[url('/bgImage.svg')] bg-contain">
       <Toaster />
       <Routes>
         <Route

@@ -110,7 +110,7 @@ const ChatContainer = () => {
         <div ref={scrollEnd}></div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center gap-2 p-3 min-w-0 bg-black/10 backdrop-blur-sm">
+      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 p-3 min-w-0">
         <div className="flex-1 min-w-0 flex items-center bg-gray-100/12 px-2 sm:px-3 rounded-full">
           <input
             onChange={(e) => setInput(e.target.value)}
